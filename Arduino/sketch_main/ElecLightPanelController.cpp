@@ -43,9 +43,9 @@ void CElecLightPanelController::Init()
     AddSocketPropBtn(m_pageID, 17, "bf4", EL_POINT_PROP_4, "");
 
     int otherButtonCmd = 1;
-  m_btnMenu = new NexButton(m_pageID, 1, "bMenu");  
-  m_btnMenu->attachPush(CElecLightPanelController::EventPageButton, (void*)otherButtonCmd);
-  m_nex_listen_list[m_currListenItem++] = m_btnMenu;
+    m_btnMenu = new NexButton(m_pageID, 1, "bMenu");  
+    m_btnMenu->attachPush(CElecLightPanelController::EventPageButton, (void*)otherButtonCmd);
+    m_nex_listen_list[m_currListenItem++] = m_btnMenu;
     
 
     m_pDate    = new NexText(m_pageID, 5, "tDate");
@@ -135,6 +135,31 @@ void CElecLightPanelController::ProcessCMD(sCmdWord &cmd)
             }
         }
     }
+}
+
+
+void CElecLightPanelController::ProcessInvalidateCMD(sCmdInvalidate& cmd)
+{
+	//invalidte sens lamp
+	short nextPropBtn = -1;
+	short nextBtn = -1;
+
+	for(int i = 0; i < cmd.GetCountItems(); i++)
+	{
+		int val = cmd.GetItem(i) == '1' ? 1 : 0;
+		
+		if( i == 1 || i == 3 || i == 5 || i == 7)
+		{
+			nextPropBtn++;
+			m_btnsProp[nextPropBtn]->SetValue(val);
+		}
+		else
+		{
+			nextBtn++;
+			m_btns[nextBtn]->SetValue(val);
+		}
+		delay(30);
+	}
 }
 
 
