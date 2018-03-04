@@ -1,0 +1,150 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="nextion">
+      <UniqueIdentifier>{4da92bf2-0880-4888-97ad-587ef8dd7da8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\1_Light">
+      <UniqueIdentifier>{47208705-1868-4c69-bc10-4ca2c9c1a701}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\2_PressAir">
+      <UniqueIdentifier>{daa20eb3-ac80-48d0-8830-068dbcdaaff1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\3_Klimate">
+      <UniqueIdentifier>{4f10c07b-0ee3-474a-b901-97c5076762ef}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\4_Electr">
+      <UniqueIdentifier>{e888e0ce-7196-4bb5-a7f4-7b4af0564c51}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\5_Door">
+      <UniqueIdentifier>{d3e76b20-0718-40ca-91e7-12b34b3b0b9f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\6_Settings">
+      <UniqueIdentifier>{f6b62243-9d65-4760-950c-b1a87a24c891}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Nextion.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="next\NexHardware.h">
+      <Filter>nextion</Filter>
+    </ClInclude>
+    <ClInclude Include="next\NexDualStateButton.h">
+      <Filter>nextion</Filter>
+    </ClInclude>
+    <ClInclude Include="next\NexPage.h">
+      <Filter>nextion</Filter>
+    </ClInclude>
+    <ClInclude Include="next\NexTouch.h">
+      <Filter>nextion</Filter>
+    </ClInclude>
+    <ClInclude Include="sketch_main\MainAppl.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="next\NexButton.h">
+      <Filter>nextion</Filter>
+    </ClInclude>
+    <ClInclude Include="sketch_main\NextionObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sketch_main\SerialCmd.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sketch_main\SerialCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sketch_main\GlobalDef.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sketch_main\ElecLightPanelController.h">
+      <Filter>Source Files\4_Electr</Filter>
+    </ClInclude>
+    <ClInclude Include="sketch_main\LightPanelController.h">
+      <Filter>Source Files\1_Light</Filter>
+    </ClInclude>
+    <ClInclude Include="sketch_main\ObjectConstructor.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sketch_main\PressairPanelController.h">
+      <Filter>Source Files\2_PressAir</Filter>
+    </ClInclude>
+    <ClInclude Include="sketch_main\KlimatePanelController.h">
+      <Filter>Source Files\3_Klimate</Filter>
+    </ClInclude>
+    <ClInclude Include="sketch_main\DoorPanelController.h">
+      <Filter>Source Files\5_Door</Filter>
+    </ClInclude>
+    <ClInclude Include="sketch_main\SettingsPanelController.h">
+      <Filter>Source Files\6_Settings</Filter>
+    </ClInclude>
+    <ClInclude Include="stdafx.h">
+      <Filter>nextion</Filter>
+    </ClInclude>
+    <ClInclude Include="sketch_main\OneWireExt.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="sketch_main\BasesClasses.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Arduino.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="sketch_main\NextionObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="next\NexDualStateButton.cpp">
+      <Filter>nextion</Filter>
+    </ClCompile>
+    <ClCompile Include="next\NexHardware.cpp">
+      <Filter>nextion</Filter>
+    </ClCompile>
+    <ClCompile Include="next\NexPage.cpp">
+      <Filter>nextion</Filter>
+    </ClCompile>
+    <ClCompile Include="sketch_main\MainAppl.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="next\NexButton.cpp">
+      <Filter>nextion</Filter>
+    </ClCompile>
+    <ClCompile Include="sketch_main\ElecLightPanelController.cpp">
+      <Filter>Source Files\4_Electr</Filter>
+    </ClCompile>
+    <ClCompile Include="sketch_main\LightPanelController.cpp">
+      <Filter>Source Files\1_Light</Filter>
+    </ClCompile>
+    <ClCompile Include="sketch_main\PressairPanelController.cpp">
+      <Filter>Source Files\2_PressAir</Filter>
+    </ClCompile>
+    <ClCompile Include="sketch_main\KlimatePanelController.cpp">
+      <Filter>Source Files\3_Klimate</Filter>
+    </ClCompile>
+    <ClCompile Include="sketch_main\DoorPanelController.cpp">
+      <Filter>Source Files\5_Door</Filter>
+    </ClCompile>
+    <ClCompile Include="sketch_main\SettingsPanelController.cpp">
+      <Filter>Source Files\6_Settings</Filter>
+    </ClCompile>
+    <ClCompile Include="sketch_main\GlobalDef.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+</Project>

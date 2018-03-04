@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="NextionObject.cpp">
+      <Filter>baseObject</Filter>
+    </ClCompile>
+    <ClCompile Include="IDGen.cpp">
+      <Filter>baseObject</Filter>
+    </ClCompile>
+    <ClCompile Include="GlobalDef.cpp">
+      <Filter>baseObject</Filter>
+    </ClCompile>
+    <ClCompile Include="stdafx.cpp">
+      <Filter>baseObject</Filter>
+    </ClCompile>
+    <ClCompile Include="Arduino_2.cpp" />
+    <ClCompile Include="DoorPanelController.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="SerialController.hpp" />
+    <ClInclude Include="BasesClasses.hpp">
+      <Filter>baseObject</Filter>
+    </ClInclude>
+    <ClInclude Include="CIDGen.h">
+      <Filter>baseObject\h</Filter>
+    </ClInclude>
+    <ClInclude Include="IInterface.h">
+      <Filter>baseObject\h</Filter>
+    </ClInclude>
+    <ClInclude Include="NextionObject.h">
+      <Filter>baseObject\h</Filter>
+    </ClInclude>
+    <ClInclude Include="SerialCmd.h">
+      <Filter>baseObject\h</Filter>
+    </ClInclude>
+    <ClInclude Include="SerialCommand.h" />
+    <ClInclude Include="stdafx.h">
+      <Filter>baseObject</Filter>
+    </ClInclude>
+    <ClInclude Include="GlobalDef.h">
+      <Filter>baseObject\h</Filter>
+    </ClInclude>
+    <ClInclude Include="PanelIncl.hpp" />
+    <ClInclude Include="DoorPanelController.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="baseObject">
+      <UniqueIdentifier>{86550317-3579-4508-aa07-2bee60ab1865}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="baseObject\h">
+      <UniqueIdentifier>{e3fbab50-5332-4091-b687-06c3bfa85672}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

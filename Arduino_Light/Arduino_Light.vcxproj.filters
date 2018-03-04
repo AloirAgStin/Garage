@@ -1,0 +1,46 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Arduino.cpp" />
+    <ClCompile Include="stdafx.cpp">
+      <Filter>baseObject</Filter>
+    </ClCompile>
+    <ClCompile Include="sketch_light/ElecPanelController.cpp" />
+    <ClCompile Include="sketch_light/GlobalDef.cpp" />
+    <ClCompile Include="sketch_light/IDGen.cpp" />
+    <ClCompile Include="sketch_light/LightPanelController.cpp" />
+    <ClCompile Include="sketch_light/NextionObject.cpp" />
+    <ClCompile Include="sketch_light/PressAirPanelController.cpp" />
+    <ClCompile Include="sketch_light/SerialController.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="stdafx.h">
+      <Filter>baseObject</Filter>
+    </ClInclude>
+    <ClInclude Include="sketch_light/BasesClasses.hpp" />
+    <ClInclude Include="sketch_light/CIDGen.h" />
+    <ClInclude Include="sketch_light/ElecItems.h" />
+    <ClInclude Include="sketch_light/ElecPanelController.h" />
+    <ClInclude Include="sketch_light/LightItems.h" />
+    <ClInclude Include="sketch_light/LightPanelController.h" />
+    <ClInclude Include="sketch_light/MotionSensor.hpp" />
+    <ClInclude Include="sketch_light/GlobalDef.h" />
+    <ClInclude Include="sketch_light/IInterface.h" />
+    <ClInclude Include="sketch_light/NextionObject.h" />
+    <ClInclude Include="sketch_light/PanelIncl.hpp" />
+    <ClInclude Include="sketch_light/PressAirElem.hpp" />
+    <ClInclude Include="sketch_light/PressAirPanelController.h" />
+    <ClInclude Include="sketch_light/SerialCmd.h" />
+    <ClInclude Include="sketch_light/SerialCommand.h" />
+    <ClInclude Include="sketch_light/SerialController.h" />
+    <ClInclude Include="sketch_light/Timer.hpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="baseObject">
+      <UniqueIdentifier>{86550317-3579-4508-aa07-2bee60ab1865}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="baseObject\h">
+      <UniqueIdentifier>{e3fbab50-5332-4091-b687-06c3bfa85672}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

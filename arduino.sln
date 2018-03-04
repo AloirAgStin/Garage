@@ -1,0 +1,32 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Arduino", "Arduino\Arduino.vcxproj", "{1295E318-1DD4-4FAC-A59F-B46B32C69978}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Arduino_Light", "Arduino_Light\Arduino_Light.vcxproj", "{DA7C16CC-E52E-4247-A0CB-D87080F64E4D}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Arduino_2", "Arduino_2\Arduino_2.vcxproj", "{EE6E156F-3AEF-4BA4-9F8D-21DF8CF8FB53}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{1295E318-1DD4-4FAC-A59F-B46B32C69978}.Debug|Win32.ActiveCfg = Debug|Win32
+		{1295E318-1DD4-4FAC-A59F-B46B32C69978}.Debug|Win32.Build.0 = Debug|Win32
+		{1295E318-1DD4-4FAC-A59F-B46B32C69978}.Release|Win32.ActiveCfg = Release|Win32
+		{1295E318-1DD4-4FAC-A59F-B46B32C69978}.Release|Win32.Build.0 = Release|Win32
+		{DA7C16CC-E52E-4247-A0CB-D87080F64E4D}.Debug|Win32.ActiveCfg = Debug|Win32
+		{DA7C16CC-E52E-4247-A0CB-D87080F64E4D}.Debug|Win32.Build.0 = Debug|Win32
+		{DA7C16CC-E52E-4247-A0CB-D87080F64E4D}.Release|Win32.ActiveCfg = Release|Win32
+		{DA7C16CC-E52E-4247-A0CB-D87080F64E4D}.Release|Win32.Build.0 = Release|Win32
+		{EE6E156F-3AEF-4BA4-9F8D-21DF8CF8FB53}.Debug|Win32.ActiveCfg = Debug|Win32
+		{EE6E156F-3AEF-4BA4-9F8D-21DF8CF8FB53}.Debug|Win32.Build.0 = Debug|Win32
+		{EE6E156F-3AEF-4BA4-9F8D-21DF8CF8FB53}.Release|Win32.ActiveCfg = Release|Win32
+		{EE6E156F-3AEF-4BA4-9F8D-21DF8CF8FB53}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
