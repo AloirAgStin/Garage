@@ -54,9 +54,9 @@ static CSerial Serial, Serial1, Serial2, Serial3;
 #endif
 
 
-#define CMD_NUM 0x24			// $
-#define CMD_FLOAT 0x7e			// ~
-#define CMD_INVALIDATE 0x7c		// |
+#define CMD_NUM 0x24    // $
+#define CMD_FLOAT 0x7e  // ~
+#define CMD_INVALIDATE 0x7c  // |
 
 
 #define CMD_LEN                5 

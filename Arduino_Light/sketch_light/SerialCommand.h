@@ -112,6 +112,9 @@ enum ePageID
 //
 // ELECTRIK PANEL
 //
+
+#define CMD_EL_INVALIDATE_A      "E|A"//"E|A00000000000" //from socket to end, last ups mid button
+
 #define EL_POINT_1               "Ebs11" //  POINT 1
 #define EL_POINT_2               "Ebs21" //  POINT 2
 #define EL_POINT_3               "Ebs31" //  POINT 3

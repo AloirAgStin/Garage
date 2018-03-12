@@ -68,16 +68,18 @@ void printAddress(DeviceAddress deviceAddress)
 }*/
 void CMainAppl::ResetNextion()
 {
+	SMESN("Reset Nextion");
+
 	nexSerial.print("rest");
 	nexSerial.write(0xFF);
 	nexSerial.write(0xFF);
 	nexSerial.write(0xFF);
-	nexSerial.end();
-	delay(1000);
+	delay(1500);
 }
 
 void CMainAppl::InitNextionSerialSpeed()
 {
+	SMESN("Init SerialSpeed");
 	nexSerial.print("baud=57600");
 	nexSerial.write(0xFF);
 	nexSerial.write(0xFF);
@@ -99,7 +101,6 @@ void CMainAppl::Init()
   SMESN("INIT MAIN PAGE");
   nexInit();
   
-  //todo check
   ResetNextion();
   InitNextionSerialSpeed();
   
@@ -350,6 +351,12 @@ void CMainAppl::ProcessSerial(CSendCmd &cmdArduino)
 						if(cmdinv->GetMode() == 'B')
 							symbCount = 8;
 					}
+					else
+					if(cmdinv->GetReciver() == 'E')
+					{
+						if(cmdinv->GetMode() == 'A')
+							symbCount = 11;
+					}
 					
 					while(symbCount > cmdArduino.available() )
 						delay(2);
@@ -441,6 +448,15 @@ void CMainAppl::ProcessInvalidateCMD(sCmdInvalidate& cmd)
 			if(cmd.GetReciver() == 'L')
 			{
 				m_Constructor.GetObject(eLight)->ProcessInvalidateCMD(cmd);
+				return;
+			}
+			break;
+		}
+		case eElectNetWork:
+		{
+			if(cmd.GetReciver() == 'E')
+			{
+				m_Constructor.GetObject(eElectNetWork)->ProcessInvalidateCMD(cmd);
 				return;
 			}
 			break;

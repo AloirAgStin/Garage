@@ -223,6 +223,12 @@ void CLightPanelController::SetAutoSingle(bool IsOn)
     }    
 	InvalidateA();
 
+	{
+		sCmdWord cmdAutoSingl(BTN_AUTO_SING);
+		cmdAutoSingl.SetAction(m_isAutoSingle == true ? 1 : 0);
+		SendCMD(&cmdAutoSingl);      
+	}
+
 
 
 	/*
