@@ -23,7 +23,7 @@ public:
 
     virtual void ProcessInterface() { nexLoop(m_nex_listen_list); } 
     virtual void ProcessCMD(sCmdWord &cmd);
-	virtual void ProcessInvalidateCMD(sCmdInvalidate& cmd) {}
+	virtual void ProcessInvalidateCMD(sCmdInvalidate& cmd);
 
   
     static void EventOnOFFBtn(void *ptr);

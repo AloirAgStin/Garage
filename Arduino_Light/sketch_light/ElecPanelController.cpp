@@ -30,7 +30,7 @@ short CElecPanelController::SetupObjects()
     short PIN_SOCKET = 51;
     m_arrSocketSwitches[m_countSocket++] = new CSimpleSocet(PIN_SOCKET, timeOff, "bt1", EL_POINT_1, "", "bf1", EL_POINT_PROP_1, "");
     m_arrSocketSwitches[m_countSocket - 1]->SetTimerParent(m_arrSocketSwitches[m_countSocket-1]);
-      m_slots[nextSlot++] = m_arrSocketSwitches[m_countSocket - 1]->GetID(); //SOCKET 1
+    m_slots[nextSlot++] = m_arrSocketSwitches[m_countSocket - 1]->GetID(); //SOCKET 1
     
     
     //SETUP MULTIMEDIA SYSTEM //HIGH SIGNAL
@@ -38,8 +38,8 @@ short CElecPanelController::SetupObjects()
     short PIN_MULTIMEDIA = 49;
 
     m_mediaSystem = new CMultimediaSystem(PIN_MULTIMEDIA, timeOff, "bt2", EL_POINT_2, "", "bf2", EL_POINT_PROP_2, "", PIN_IndicatorMediaSystem);
-      m_arrSocketSwitches[m_countSocket - 1]->SetTimerParent(m_arrSocketSwitches[m_countSocket-1]);
-      m_arrSocketSwitches[m_countSocket++] = m_mediaSystem;
+    m_arrSocketSwitches[m_countSocket - 1]->SetTimerParent(m_arrSocketSwitches[m_countSocket-1]);
+    m_arrSocketSwitches[m_countSocket++] = m_mediaSystem;
     m_slots[nextSlot++] = m_arrSocketSwitches[m_countSocket - 1]->GetID(); //MULTIMEDIA 2
     
 
@@ -47,13 +47,13 @@ short CElecPanelController::SetupObjects()
     short PIN_DISPLAY = 43; //LOWSIGNAL
     m_arrSocketSwitches[m_countSocket++] = new CDisplaySocket(PIN_DISPLAY, timeOff, "bt3", EL_POINT_3, "", "bf3", EL_POINT_PROP_3, "");
     m_arrSocketSwitches[m_countSocket - 1]->SetTimerParent(m_arrSocketSwitches[m_countSocket-1]);
-      m_slots[nextSlot++] = m_arrSocketSwitches[m_countSocket - 1]->GetID(); //SCREEN 3
+    m_slots[nextSlot++] = m_arrSocketSwitches[m_countSocket - 1]->GetID(); //SCREEN 3
 
     //SETUP CHARGE BOX
     short PIN_CHARGE_BOX = 52;   //HIGH SIGNAL
     m_arrSocketSwitches[m_countSocket++] = new CSimpleSocet(PIN_CHARGE_BOX, timeOff, "bt4", EL_POINT_4, "", "bf4", EL_POINT_PROP_4, "");
-      m_arrSocketSwitches[m_countSocket - 1]->SetTimerParent(m_arrSocketSwitches[m_countSocket-1]);
-      m_slots[nextSlot++] = m_arrSocketSwitches[m_countSocket - 1]->GetID(); //CHARGE BOX 4
+    m_arrSocketSwitches[m_countSocket - 1]->SetTimerParent(m_arrSocketSwitches[m_countSocket-1]);
+    m_slots[nextSlot++] = m_arrSocketSwitches[m_countSocket - 1]->GetID(); //CHARGE BOX 4
     
     //SETUP UPS 1
     short PIN_UPS1 = 46;      //HIGH SIGNAL
@@ -143,6 +143,7 @@ int CElecPanelController::Process()
         lastVoltage  = false;
     else 
     lastVoltage = true;
+
     //todo delete after instal sensor
     lastVoltage = true;
     
@@ -211,8 +212,22 @@ void CElecPanelController::Show()
 void CElecPanelController::InvalidateScreen()
 {
      SMESN("Inv Elect");
-    //read all item and draw their status    
-     for(int i = 0; i < m_countSocket; i++)
+
+	  sCmdInvalidate invA(CMD_EL_INVALIDATE_A);
+	 
+	  for(int i = 0; i < m_countSocket; i++)
+	 {
+		 invA.AddNextSymb(m_arrSocketSwitches[i]->GetCmdForInvalidateBtn()->GetAction() == 1 ? '1' : '0');
+		 if(i < 4)
+			 invA.AddNextSymb(m_arrSocketSwitches[i]->GetCmdForInvalidateBtn()->GetAction() == 1 ? '1' : '0');
+	 }
+	 cmdArduino->SendCommand(invA.buff);
+	 cmdArduino->flush();
+
+
+    //read all item and draw their status 
+	 //todo del
+     /*for(int i = 0; i < m_countSocket; i++)
      {
         SendCMD(m_arrSocketSwitches[i]->GetCmdForInvalidateBtn());
         delay(50);
@@ -222,7 +237,8 @@ void CElecPanelController::InvalidateScreen()
 			SendCMD(m_arrSocketSwitches[i]->GetCmdForInvalidateProp());
 			delay(50);
 		}
-    }   
+    }  
+	*/ 
 }
 
 CElecPanelController::CElecPanelController(CSendCmd *port) 
