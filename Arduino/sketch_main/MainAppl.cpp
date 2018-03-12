@@ -68,16 +68,18 @@ void printAddress(DeviceAddress deviceAddress)
 }*/
 void CMainAppl::ResetNextion()
 {
+	SMESN("Reset Nextion");
+
 	nexSerial.print("rest");
 	nexSerial.write(0xFF);
 	nexSerial.write(0xFF);
 	nexSerial.write(0xFF);
-	nexSerial.end();
-	delay(1000);
+	delay(1500);
 }
 
 void CMainAppl::InitNextionSerialSpeed()
 {
+	SMESN("Init SerialSpeed");
 	nexSerial.print("baud=57600");
 	nexSerial.write(0xFF);
 	nexSerial.write(0xFF);
@@ -99,7 +101,6 @@ void CMainAppl::Init()
   SMESN("INIT MAIN PAGE");
   nexInit();
   
-  //todo check
   ResetNextion();
   InitNextionSerialSpeed();
   
