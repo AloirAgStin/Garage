@@ -11,6 +11,8 @@ enum eStatusOnOFF
 };
     
 
+
+
 #ifdef WIN32
     #include "..\stdafx.h"
     #include <windows.h>
@@ -158,5 +160,20 @@ inline void tsLeft(char* buff, short len)
 #define delete_2x_Array(arr, size) for(int i = 0; i < size; i++) delete arr[i]; delete []arr;
 #define zm(x,val) memset(x,val, sizeof(x))
 #define delete_if_exists(x) if(x) delete x;
+
+struct CDelay
+{
+	CDelay(int time)
+	{
+		_delay = time;
+	}
+
+	~CDelay()
+	{
+		delay(_delay);
+	}
+
+	int _delay;
+};
 
 #endif

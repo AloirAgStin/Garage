@@ -143,6 +143,8 @@ void CPressairPanelController::ProcessInvalidateCMD(sCmdInvalidate& cmd)
 
 void CPressairPanelController::ProcessCMD(sCmdWord &cmd)
 {
+	CDelay del(30);
+
     int action = cmd.GetAction();
 
     if(cmd.Type == sCmdWord::eMSGType::eCMD_FLOAT)

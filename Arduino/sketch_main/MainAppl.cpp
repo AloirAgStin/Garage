@@ -376,7 +376,7 @@ void CMainAppl::ProcessSerial(CSendCmd &cmdArduino)
 				{
 					if(IsLongCmd)
 					{
-						for (int i = 2; i< CMD_WORD_LEN; i++)
+						for (int i = 2; i< CMD_WORD_LEN - 1; i++)
 							cmd.buff[i] = cmdArduino.Read(); 
 
 						cmd.buff[CMD_WORD_LEN - 1] = 0x0;

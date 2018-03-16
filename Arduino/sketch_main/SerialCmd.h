@@ -17,7 +17,7 @@ public:
     CSerial(){
          memset(buff, 0, sizeof(buff));
 #ifdef WIN32
-		 strcpy(buff, "L|A0000000000000111L|B00011001Lbs11");
+		 strcpy(buff, "LbsG1Lbs11Lbs31Lbs51");
 #endif
     }
     void begin(int){}

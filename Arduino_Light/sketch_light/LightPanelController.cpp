@@ -29,8 +29,9 @@ short CLightPanelController::SetupObjects()
     AddMicroWaveSensor(7);  
         
     //add sensor lamp    
+	//todo поменять сенсоры
     m_slots[2] = AddSensorLight(22, 36, time, "bs1", AUTO_BULB_LIGHT_3, "", "sa1", AUTO_BULB_LIGHT_3_SENS, "");
-    m_slots[3] = AddSensorLight(23, 37, time, "bs2", AUTO_BULB_LIGHT_4, "", "sa2", AUTO_BULB_LIGHT_4_SENS, "");
+    m_slots[3] = AddSensorLight(23, 0, time, "bs2", AUTO_BULB_LIGHT_4, "", "sa2", AUTO_BULB_LIGHT_4_SENS, "");
   
     //AddConvertor(10);
     m_slots[4] = AddSensorLight(24, 38, time, "bs3", AUTO_BULB_LIGHT_5, "", "sa3", AUTO_BULB_LIGHT_5_SENS, "");
@@ -377,9 +378,19 @@ int CLightPanelController::Process()
     //if signal isn't exists, trun off all usual lamp
     if(false == m_MicroWaveSensor->m_IsAllowlight && !m_isAutoAll)
     {
+		const int time_Delay = 
+			#ifdef WIN32
+						1;
+			#else
+						1000;
+			#endif		
+
         static unsigned long lastdraw = 0;
-        if(millis() - lastdraw > 1000)
+        if(millis() - lastdraw > time_Delay)
         {
+			//todo check
+			SMESN("TRY TO OFF ALL SENSOR");
+
             for(int i = 0; i < m_CountLight; i++)
             {
                 if(m_arrLightSwitches[i].Off())
@@ -389,7 +400,7 @@ int CLightPanelController::Process()
                 }
             }
 
-            lastdraw - millis();
+            lastdraw = millis();
         }
     }
 

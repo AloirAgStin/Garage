@@ -99,7 +99,7 @@ bool CPressAirPanelController::setPress(short num, float value)
     else
         newVal = m_maxPress + value;
 
-        ret = !IsDoubleEqual(newVal, m_maxPress);
+        ret = !IsDoubleEqual4(newVal, m_maxPress);
         m_maxPress = newVal;
 
     return ret;
@@ -110,8 +110,17 @@ bool CPressAirPanelController::readPressAir(short num, float& value, bool _force
 	if(!_force)
 	{
 		static unsigned long lastdraw = 0;
-		if(millis() - lastdraw < 5000)
+		auto tim = millis();
+		if(tim - lastdraw < 
+#ifdef WIN32
+			5
+#else
+			5000
+#endif			
+			)
 			return false;
+
+		lastdraw = millis();
 	}
 
     float tempPress = 0.0;   
@@ -127,7 +136,7 @@ bool CPressAirPanelController::readPressAir(short num, float& value, bool _force
 
     //new value
     tempPress = tempPress / (float)countCalc;
-	if(IsDoubleEqual(tempPress, value))
+	if(IsDoubleEqual2(tempPress, value))
 		return false;
 
     value = tempPress;
@@ -138,6 +147,10 @@ int CPressAirPanelController::Process()
 {   
     if(readPressAir(1, m_currPress))
     {
+		static unsigned long lastdraw = 0;
+		if(millis() - lastdraw < 5000)
+			return false;
+
 		//sCmdWord cmd(PA_TEXT_PRESS_CUR, m_currPress, 1);
         //SendCMD(&cmd);
         //delay(50);
@@ -158,7 +171,7 @@ void CPressAirPanelController::Show()
 void CPressAirPanelController::InvalidateScreen()
 {
     SMESN("Inv PRESSAIR");
-    int inDelay = 100;
+    int inDelay = 50;
 
     SendCMD(m_compressor.GetCmdForInvalidateBtn());
     delay(inDelay);

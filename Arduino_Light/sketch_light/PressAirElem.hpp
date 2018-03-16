@@ -62,7 +62,7 @@ public:
         return GetCmdByValue(act);
     }
 
-
+		
     void Process(const float &curPress, const float &maxPress)
     {
         if(m_status == ACTIVE)
@@ -78,8 +78,9 @@ public:
             Off();
         else
         if(curPress <= maxPress - 1) //if max press -1 bar, begin pumping
+		{
             On();
-
+		}
     }
 };
 

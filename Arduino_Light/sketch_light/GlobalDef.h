@@ -14,7 +14,8 @@ enum eStatusOnOFF
 //todo debug
 #define DEBUG_INFO
 
-bool IsDoubleEqual(double x, double y);
+bool IsDoubleEqual4(double x, double y);
+bool IsDoubleEqual2(double x, double y);
 
 #ifdef WIN32
     #include "../stdafx.h"
@@ -49,7 +50,7 @@ bool IsDoubleEqual(double x, double y);
     inline void sendCommand(char* t) {}
     inline int memoryFree() { return 9999; }
 
-    inline uint32_t millis() { return 1;} 
+    inline uint32_t millis() { return time(0);} 
     inline int dtostrf(float, int, int, char*){ return 1;}
 
 

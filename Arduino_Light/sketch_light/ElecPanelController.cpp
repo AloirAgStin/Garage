@@ -44,7 +44,7 @@ short CElecPanelController::SetupObjects()
     
 
     //SETUP SCREEN
-    short PIN_DISPLAY = 43; //LOWSIGNAL
+    short PIN_DISPLAY = 37; //LOWSIGNAL
     m_arrSocketSwitches[m_countSocket++] = new CDisplaySocket(PIN_DISPLAY, timeOff, "bt3", EL_POINT_3, "", "bf3", EL_POINT_PROP_3, "");
     m_arrSocketSwitches[m_countSocket - 1]->SetTimerParent(m_arrSocketSwitches[m_countSocket-1]);
     m_slots[nextSlot++] = m_arrSocketSwitches[m_countSocket - 1]->GetID(); //SCREEN 3

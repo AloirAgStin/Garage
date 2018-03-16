@@ -151,6 +151,8 @@ void CKlimatePanelController::ProcessInvalidateCMD(sCmdInvalidate& cmd)
 
 void CKlimatePanelController::ProcessCMD(sCmdWord &cmd)
 {
+	CDelay del(30);
+
     int action = cmd.GetAction();
 
 
