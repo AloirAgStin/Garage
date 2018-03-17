@@ -90,10 +90,10 @@ struct sCmdWord
     sCmdWord(const char* cmd)
     {
         clear();
-        
         strcpy(buff,cmd);
 #ifdef WIN32
-        if(buff[1] != CMD_FLOAT && buff[1] != CMD_NUM)
+
+        if(buff[1] != CMD_FLOAT && buff[1] != CMD_NUM && strlen(cmd) > 0)
             cout << (strlen(buff) != 5 ? "ERROR" : "");
 #endif
         buff[CMD_LEN] = 0x00;

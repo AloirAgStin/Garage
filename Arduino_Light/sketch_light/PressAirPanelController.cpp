@@ -41,6 +41,8 @@ void CPressAirPanelController::SendCMD(sCmdWord* cmd)
 
 void CPressAirPanelController::ProcessSerialCMD(sCmdWord &cmd)
 {
+	CDelay dl(30);
+	 
     bool ret = false;
     if(cmd.IsCommand(SHOW_PRESSAIR_PAGE))
         InvalidateScreen();
@@ -147,22 +149,32 @@ int CPressAirPanelController::Process()
 {   
     if(readPressAir(1, m_currPress))
     {
+#ifdef WIN32
+	#define PRESS_AIR_READ 5
+#else
+	#define PRESS_AIR_READ 5000
+#endif
 		static unsigned long lastdraw = 0;
-		if(millis() - lastdraw < 5000)
+		if(millis() - lastdraw < PRESS_AIR_READ)
 			return false;
 
-		//sCmdWord cmd(PA_TEXT_PRESS_CUR, m_currPress, 1);
-        //SendCMD(&cmd);
-        //delay(50);
+		sCmdWord cmd(PA_TEXT_PRESS_CUR, m_currPress, 1);
+        SendCMD(&cmd);
+
+		lastdraw  = millis();
     }
 
     m_compressor.Process(m_currPress, m_maxPress);
-    m_sink.Process();
+	if(m_compressor._needSinkReset && m_sink.IsAuto())
+	{
+		m_sink.Execute();
+		m_compressor._needSinkReset = false;
+	}
+	m_sink.Process();
 
     return 1;
 }
-
-
+	
 void CPressAirPanelController::Show()
 {
     InvalidateScreen();
@@ -171,12 +183,15 @@ void CPressAirPanelController::Show()
 void CPressAirPanelController::InvalidateScreen()
 {
     SMESN("Inv PRESSAIR");
-    int inDelay = 50;
+    const short inDelay = 50;
 
     SendCMD(m_compressor.GetCmdForInvalidateBtn());
     delay(inDelay);
 
-    {
+	SendCMD(m_sink.GetCmdForInv());
+	delay(inDelay);
+	
+	{
         readPressAir(1, m_currPress, true);
         sCmdWord cmd(PA_TEXT_PRESS_CUR, m_currPress, 1);
         SendCMD(&cmd);
@@ -191,25 +206,21 @@ void CPressAirPanelController::InvalidateScreen()
 }
 
 CPressAirPanelController::CPressAirPanelController(CSendCmd *port) 
-    : m_pressSens(A0)
+	: m_pressSens(A0)
 {
-    cmdArduino      = port;
+	cmdArduino      = port;
 }
 
 short CPressAirPanelController::Init()
 {
-    m_currPress = 0.0;
-    m_maxPress  = 0.0;
+	m_currPress = 0.0;
+	m_maxPress  = 0.0;
 
-    short ret = 0;
-    ret = SetupObjects();
+	short ret = 0;
+	ret = SetupObjects();
 
-    if(ret != 1) return ret;    
+	if(ret != 1) return ret;    
 
 
-    return 1;
-}
-
-CPressAirPanelController::~CPressAirPanelController(void)
-{    
+	return 1;
 }

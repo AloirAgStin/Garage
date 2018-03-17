@@ -137,4 +137,19 @@ inline void tsLeft(char* buff, short len)
 #define zm(x,val) memset(x,val, sizeof(x))
 #define delete_if_exists(x) if(x) delete x;
 
+struct CDelay
+{
+	CDelay(int time)
+	{
+		_delay = time;
+	}
+
+	~CDelay()
+	{
+		delay(_delay);
+	}
+
+	int _delay;
+};
+
 #endif

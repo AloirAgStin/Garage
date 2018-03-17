@@ -8,6 +8,13 @@
     #include "../stdafx.h"
 #endif
 
+#ifdef WIN32
+	#define CLOSE_SINK_TIME 5
+#else
+	#define CLOSE_SINK_TIME 5000
+#endif
+
+
 class CCompressor 
     : protected CDigitalOnOff,
       public CNextionDSObject
@@ -19,6 +26,7 @@ public:
     { 
         m_status = INACTIVE; 
         Off();
+		_needSinkReset = false;
     }
 
     CCompressor(short pin, const char *cmdName, const char* cmd) 
@@ -27,6 +35,7 @@ public:
     { 
         m_status = INACTIVE; 
         Off();
+		_needSinkReset = false;
     }
 
     enum
@@ -34,7 +43,8 @@ public:
         INACTIVE = 0,
         ACTIVE = 1,        
     } m_status;
-
+	
+	bool _needSinkReset;
 
     void SetActive(bool IsActive)
     {
@@ -65,18 +75,15 @@ public:
 		
     void Process(const float &curPress, const float &maxPress)
     {
-        if(m_status == ACTIVE)
-            On();
-        else
-            Off();
-
-        if(m_status != ACTIVE)
-            return;
-
+		if(m_status != ACTIVE)
+			return;
 
         if(curPress >= maxPress)
+		{
             Off();
-        else
+			_needSinkReset = true;
+		}
+		else
         if(curPress <= maxPress - 1) //if max press -1 bar, begin pumping
 		{
             On();
@@ -106,30 +113,29 @@ public:
     void Process()
     {
         static unsigned long openTime = 0;
+
         if(m_IsNeedOpen)
         {
             On();
             m_IsOpening = true;
             m_IsNeedOpen = false;
+			openTime = millis();
             return;
         }
         else
         if(m_IsOpening)
         {
-            if(millis() - openTime > 5000)
+            if(millis() - openTime > CLOSE_SINK_TIME)
             {
                 Off();
                 m_IsOpening = false;
             }
         }
-
-        //todo auto mode
     }
 
     void Execute()
     {
         m_IsNeedOpen = 1;
-        Process();
     }
 
     bool SetAuto(bool isOn)
@@ -141,6 +147,7 @@ public:
 
         return true;
     }
+	bool IsAuto() { return m_IsAuto; }
 
     sCmdWord* GetCmdForInv()
     {

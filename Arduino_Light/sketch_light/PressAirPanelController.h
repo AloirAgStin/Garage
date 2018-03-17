@@ -17,7 +17,7 @@ public:
     };
 
     CPressAirPanelController(CSendCmd *port);
-    ~CPressAirPanelController(void);
+    ~CPressAirPanelController(void) {}
 
     short Init();
     
