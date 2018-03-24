@@ -101,8 +101,21 @@ bool CPressAirPanelController::setPress(short num, float value)
     else
         newVal = m_maxPress + value;
 
-        ret = !IsDoubleEqual4(newVal, m_maxPress);
-        m_maxPress = newVal;
+	
+    ret = !IsDoubleEqual2(newVal, m_maxPress);
+    
+	SMES("MaxPress. New: ");
+	SMES(newVal);
+
+	SMES(" Old: ");
+	SMES(m_maxPress);
+	
+	if(ret)
+		SMESN(" SendInvalidate");
+	else
+		SMESN(" ");
+	
+	m_maxPress = newVal;
 
     return ret;
 }

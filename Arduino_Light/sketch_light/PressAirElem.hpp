@@ -76,17 +76,35 @@ public:
     void Process(const float &curPress, const float &maxPress)
     {
 		if(m_status != ACTIVE)
+		{
+			Off();
 			return;
+		}
 
         if(curPress >= maxPress)
 		{
-            Off();
+			Off();
+		}
+		else
+		if(curPress <= maxPress - 1) //if max press -1 bar, begin pumping
+		{
+			On();
+		}
+		else
+		if(curPress <= maxPress - 0.3) //if max press -1 bar, begin pumping
+		{
+			//todo постоянно открыт
+
 			_needSinkReset = true;
 		}
 		else
-        if(curPress <= maxPress - 1) //if max press -1 bar, begin pumping
 		{
-            On();
+			/*
+			SMES("Cur: ");
+			SMES(curPress);
+			SMES(" Max: ");
+			SMESN(maxPress);
+			*/
 		}
     }
 };
@@ -116,7 +134,8 @@ public:
 
         if(m_IsNeedOpen)
         {
-            On();
+			SMESN("Open SINK");
+			On();
             m_IsOpening = true;
             m_IsNeedOpen = false;
 			openTime = millis();
@@ -127,6 +146,8 @@ public:
         {
             if(millis() - openTime > CLOSE_SINK_TIME)
             {
+				SMESN("Close SINK");
+
                 Off();
                 m_IsOpening = false;
             }
