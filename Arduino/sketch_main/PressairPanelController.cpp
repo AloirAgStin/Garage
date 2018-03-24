@@ -143,6 +143,8 @@ void CPressairPanelController::ProcessInvalidateCMD(sCmdInvalidate& cmd)
 
 void CPressairPanelController::ProcessCMD(sCmdWord &cmd)
 {
+	CDelay del(30);
+
     int action = cmd.GetAction();
 
     if(cmd.Type == sCmdWord::eMSGType::eCMD_FLOAT)
@@ -153,9 +155,11 @@ void CPressairPanelController::ProcessCMD(sCmdWord &cmd)
         
         if(cmd.IsCommand(PA_TEXT_PRESS_CUR))
             m_txtObject[0]->setText(buffText);
+
         if(cmd.IsCommand(PA_TEXT_PRESS_MAX))
             m_txtObject[1]->setText(buffText);
-        if(cmd.IsCommand(PA_TEXT_PRESS_OUT))
+        
+		if(cmd.IsCommand(PA_TEXT_PRESS_OUT))
             m_txtObject[2]->setText(buffText);
     }
     else

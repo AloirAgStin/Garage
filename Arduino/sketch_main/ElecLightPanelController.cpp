@@ -108,6 +108,8 @@ void CElecLightPanelController::EventPageButton(void *ptr)
 
 void CElecLightPanelController::ProcessCMD(sCmdWord &cmd)
 {
+	CDelay del(30);
+
     int action = cmd.GetAction();
 
     if(cmd.IsCommand(SHOW_MAIN_MENU))

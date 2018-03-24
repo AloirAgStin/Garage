@@ -257,7 +257,7 @@ public:
 };
 
 
-class CUPSSocket :     public CSocketWithIndicator
+class CUPSSocket : public CSocketWithIndicator
 {
 public:
     virtual ~CUPSSocket(){}
@@ -268,11 +268,11 @@ public:
     virtual bool ActionBeforeOn() 
     { 
         if(IsIndicatorOn())
-            return false;        
-
-        return true;  
+            return true;     // OK, LET ON 
+        return false;  
     }
 
+	/*
     virtual bool ActionBeforeOFF() 
     { 
         m_indicator.ReadData();
@@ -282,8 +282,9 @@ public:
 
         return true; 
     }
-
-    virtual bool ActionAfterOFF() { 
+	*/
+    virtual bool ActionAfterOFF() 
+	{ 
         int n = 0;
 
         //waiting for system on for 10 sek
@@ -296,9 +297,52 @@ public:
                 return true;
             n++;
         }
-        return false;    
+
+        return false;   
     }
+	
 };
 
+
+class CUPSSocket2 : public CSocketWithIndicator
+{
+public:
+	virtual ~CUPSSocket2(){}
+
+	CUPSSocket2(short pinSoc, unsigned int TimeOFF, const char* SocName, const char* SocCmdOn, const char* SocCmdOff, const char* PropName, const char* PropCmdOn, const char* PropCmdOff, short pinIndicator, short pinIndicator2) : 
+	CSocketWithIndicator(pinSoc, TimeOFF, SocName, SocCmdOn, SocCmdOff, PropName, PropCmdOn, PropCmdOff, pinIndicator),
+	m_indicator2(pinIndicator2) {}
+
+	virtual bool ActionBeforeOn() 
+	{ 
+		if(IsIndicatorOn() && IsIndicator2On())
+			return true;     // OK, LET ON 
+		return false;  
+	}
+	
+
+	virtual void Update()
+	{
+		UpdateIndicator();
+		CSocketWithIndicator::Update();
+	}
+
+	virtual void UpdateIndicator()
+	{
+		m_indicator.ReadData();
+		m_indicator2.ReadData();
+	}
+
+
+	//check indicator On/Off
+	virtual bool IsIndicator2On() 
+	{ 
+		return m_indicator2.GetValue() == ON ? true: false; 
+	}
+
+protected:
+	CDigitalValue m_indicator2;
+	
+};
 
 #endif

@@ -9,6 +9,14 @@ void setup();
 #include <string>
 #include <vector>
 
+/*
+//todo
+	Сделать перерисовку света
+	И сделать Invalidate для электичества
+	Электиру посмотреть команды на авто
+*/
+
+
 #include ".\sketch_light\SerialCmd.h"
 
 void main() 
@@ -48,6 +56,8 @@ void setup()
 
     m_panelPressAir = new CPressAirPanelController(&controller.cmdArduino);
     m_panelPressAir->Init();
+
+	m_panelElect->ProcessSerialCMD(sCmdWord(EL_POINT_5));
 }
 
 void loop() 

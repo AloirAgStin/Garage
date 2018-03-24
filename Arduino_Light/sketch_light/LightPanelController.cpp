@@ -29,8 +29,9 @@ short CLightPanelController::SetupObjects()
     AddMicroWaveSensor(7);  
         
     //add sensor lamp    
+	//todo поменять сенсоры
     m_slots[2] = AddSensorLight(22, 36, time, "bs1", AUTO_BULB_LIGHT_3, "", "sa1", AUTO_BULB_LIGHT_3_SENS, "");
-    m_slots[3] = AddSensorLight(23, 37, time, "bs2", AUTO_BULB_LIGHT_4, "", "sa2", AUTO_BULB_LIGHT_4_SENS, "");
+    m_slots[3] = AddSensorLight(23, 0, time, "bs2", AUTO_BULB_LIGHT_4, "", "sa2", AUTO_BULB_LIGHT_4_SENS, "");
   
     //AddConvertor(10);
     m_slots[4] = AddSensorLight(24, 38, time, "bs3", AUTO_BULB_LIGHT_5, "", "sa3", AUTO_BULB_LIGHT_5_SENS, "");
@@ -61,15 +62,15 @@ void CLightPanelController::SetAutoALL(bool IsOn)
 {
     if(IsOn)
     {
-        TurnOFFAutoBtn(BTN_SINGLE);
+		TurnOFFAutoBtn(BTN_SINGLE);
         TurnOFFAutoBtn(BTN_CEIL);
-    }
+		InvalidateB();
+	}
     
     m_isAutoAll = IsOn;
     
     SMES("Set AutoALL = ");
     SMESN(m_isAutoAll);
-
 
 
 	InvalidateA(); //invalidate send lamp
@@ -78,49 +79,25 @@ void CLightPanelController::SetAutoALL(bool IsOn)
         //usual lamp off
         for(int i = 0; i < m_CountLight; i ++)
             m_arrLightSwitches[i].Off();
-		InvalidateB();
+	//	InvalidateB();
     }
+		
 
-	/*
-    int inDelay = 100;
-
-    for(int i = 0; i < m_CountSensLight; i++)
-    {
-        if(m_UlicaLampID1 == m_arrLightSensSwitches[i].GetID() || m_UlicaLampID2 == m_arrLightSensSwitches[i].GetID() )
-            continue;
-
-        SendCMD(m_arrLightSensSwitches[i].m_btnSensors.GetCmdByValue(0));
-        delay(inDelay);
-    }
-	
-    //turn off lamp
-    if(m_isAutoAll == false)
-    {
-        //usual lamp off
-        for(int i = 0; i < m_CountLight; i ++)
-        {
-            short action = -1;
-            if(m_arrLightSwitches[i].Off())
-            {
-              SendCMD(m_arrLightSwitches[i].GetCmdForInvalidate());
-              delay(inDelay);
-            }
-        }
-    }
-	
-	*/
-   ShowAutoStatus();
+	InvalidateB();
+	ShowAutoStatus();
 }
 
 void CLightPanelController::SetAutoCeiling(bool IsOn)
 {
     m_IsAutoCeiling = IsOn;
-      SMES("Set AutoCeil = ");
-      SMESN(m_IsAutoCeiling );
-	    int inDelay = 100;
-    
+    SMES("Set AutoCeil = ");
+    SMESN(m_IsAutoCeiling );
+	
     if(IsOn)
     { 
+		TurnOFFAutoBtn(BTN_SINGLE);
+		TurnOFFAutoBtn(BTN_ALL);
+
         //usual lamp off
         for(int i = 0; i < m_CountLight; i ++)
         {
@@ -146,52 +123,11 @@ void CLightPanelController::SetAutoCeiling(bool IsOn)
 
     InvalidateA();
 
-    /*
-    int inDelay = 100;
-    
-    if(IsOn)
-    { 
-        //usual lamp off
-        for(int i = 0; i < m_CountLight; i ++)
-        {
-            short action = -1;
-            if(m_arrLightSwitches[i].Off())
-            {
-              SendCMD(m_arrLightSwitches[i].GetCmdForInvalidate());
-              delay(inDelay);
-            }        
-         }
-    }
-    
-    if(!IsOn)
-        return;
-
-    for(int i = 0; i < m_CountSensLight; i++)
-    {
-        if(m_UlicaLampID1 == m_arrLightSensSwitches[i].GetID() || m_UlicaLampID2 == m_arrLightSensSwitches[i].GetID() )
-            continue;
-
-        bool IsNeedInv = false;
-        if(m_arrLightSensSwitches[i].GetPinStatus() == eStatusOnOFF::ST_ON)
-            IsNeedInv = m_arrLightSensSwitches[i].On();
-        else
-            IsNeedInv = m_arrLightSensSwitches[i].Off();
-
-        if(IsNeedInv)
-        {
-            SendCMD(m_arrLightSensSwitches[i].GetCmdForInvalidateBtn());
-            delay(inDelay);
-        }
-
-        SendCMD(m_arrLightSensSwitches[i].GetCmdForInvalidateSens());
-        delay(inDelay);
-    }    
-	*/
-
     TurnOFFAutoBtn(BTN_ALL);
     TurnOFFAutoBtn(BTN_SINGLE);
 
-   ShowAutoStatus();
+	InvalidateB();
+    ShowAutoStatus();
 }
 
 void CLightPanelController::SetAutoSingle(bool IsOn)
@@ -222,66 +158,15 @@ void CLightPanelController::SetAutoSingle(bool IsOn)
         	m_arrLightSensSwitches[i].Off();
     }    
 	InvalidateA();
-
+	InvalidateB();
+	/*
 	{
 		sCmdWord cmdAutoSingl(BTN_AUTO_SING);
 		cmdAutoSingl.SetAction(m_isAutoSingle == true ? 1 : 0);
 		SendCMD(&cmdAutoSingl);      
 	}
-
-
-
-	/*
-    int inDelay = 100;
-
-    if(IsOn)
-    {
-        TurnOFFAutoBtn(BTN_ALL);
-        TurnOFFAutoBtn(BTN_CEIL);
-    
-      //usual lamp off
-        for(int i = 0; i < m_CountLight; i ++)
-        {
-            short action = -1;
-            if(m_arrLightSwitches[i].Off())
-            {
-              SendCMD(m_arrLightSwitches[i].GetCmdForInvalidate());
-              delay(inDelay);
-            }
-        }
-    }
-
-    SMES("Set AutoSingl = ");
-    SMESN(m_isAutoSingle);
-    m_isAutoSingle = IsOn;
-    
-    for(int i = 0; i < m_CountSensLight; i++)
-    {
-        if(m_UlicaLampID1 == m_arrLightSensSwitches[i].GetID() || m_UlicaLampID2 == m_arrLightSensSwitches[i].GetID() )
-            continue;
-
-        if(m_isAutoSingle == true)
-        {
-            m_arrLightSensSwitches[i].SetAuto();
-            SendCMD(m_arrLightSensSwitches[i].GetCmdForInvalidateBtn());
-            delay(inDelay);
-        }
-        else
-        {
-            bool IsNeedInv = false;
-            IsNeedInv = m_arrLightSensSwitches[i].Off();
-
-            if(IsNeedInv)
-            {
-                SendCMD(m_arrLightSensSwitches[i].GetCmdForInvalidateBtn());
-              delay(inDelay);
-            }
-        }
-
-        SendCMD(m_arrLightSensSwitches[i].GetCmdForInvalidateSens());
-        delay(inDelay);
-    }    
 	*/
+	
    ShowAutoStatus();
 }
 
@@ -377,9 +262,19 @@ int CLightPanelController::Process()
     //if signal isn't exists, trun off all usual lamp
     if(false == m_MicroWaveSensor->m_IsAllowlight && !m_isAutoAll)
     {
+		const int time_Delay = 
+			#ifdef WIN32
+						1;
+			#else
+						1000;
+			#endif		
+
         static unsigned long lastdraw = 0;
-        if(millis() - lastdraw > 1000)
+        if(millis() - lastdraw > time_Delay)
         {
+			//todo check
+			SMESN("TRY TO OFF ALL SENSOR");
+
             for(int i = 0; i < m_CountLight; i++)
             {
                 if(m_arrLightSwitches[i].Off())
@@ -389,7 +284,7 @@ int CLightPanelController::Process()
                 }
             }
 
-            lastdraw - millis();
+            lastdraw = millis();
         }
     }
 
@@ -732,11 +627,11 @@ void CLightPanelController::TurnOFFAutoBtn(AUTO_BTN n)
         if(m_isAutoAll)
         {
             m_isAutoAll = 0;
-
+			/*
             sCmdWord cmd(BTN_AUTO_ALL);
             cmd.SetAction(0);
             SendCMD(&cmd);
-            delay(CMD_DELAY);
+            delay(CMD_DELAY);*/
         }
     }
     else
@@ -746,11 +641,11 @@ void CLightPanelController::TurnOFFAutoBtn(AUTO_BTN n)
         if(m_IsAutoCeiling) 
         {
             m_IsAutoCeiling = 0;
-
+			/*
             sCmdWord cmd(BTN_AUTO_CEIL);
             cmd.SetAction(0);
-      SendCMD(&cmd);
-      delay(CMD_DELAY);
+		    SendCMD(&cmd);
+			delay(CMD_DELAY);*/
         }
     }
     else
@@ -760,11 +655,11 @@ void CLightPanelController::TurnOFFAutoBtn(AUTO_BTN n)
         if(m_isAutoSingle) 
         {
             m_isAutoSingle = 0;
-
+			/*
             sCmdWord cmd(BTN_AUTO_SING);
             cmd.SetAction(0);
-      SendCMD(&cmd);
-      delay(CMD_DELAY);
+            SendCMD(&cmd);
+            delay(CMD_DELAY);*/
         }
     }
 }

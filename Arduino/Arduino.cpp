@@ -38,19 +38,6 @@ void setup()
    app = new CMainAppl("pageMain");  
    app->Init();
 
-   app->ShowLight(app);
-
-
-   int symbCount = 10;
-	int curv= 0;
-   while(symbCount > curv)
-   {
-	   delay(1);
-	   curv++;
-
-   }
-
-
 	return;
 	/*
     for(int i = 0; i < data.size(); i++)

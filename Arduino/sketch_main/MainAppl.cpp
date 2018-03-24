@@ -376,7 +376,7 @@ void CMainAppl::ProcessSerial(CSendCmd &cmdArduino)
 				{
 					if(IsLongCmd)
 					{
-						for (int i = 2; i< CMD_WORD_LEN; i++)
+						for (int i = 2; i< CMD_WORD_LEN - 1; i++)
 							cmd.buff[i] = cmdArduino.Read(); 
 
 						cmd.buff[CMD_WORD_LEN - 1] = 0x0;
@@ -387,7 +387,6 @@ void CMainAppl::ProcessSerial(CSendCmd &cmdArduino)
 							cmd.buff[i] = cmdArduino.Read(); 
 						cmd.buff[CMD_LEN] = 0x0;
 					}
-					cmd.EjectType();
 
 					memmove(m_incomingCmd[m_currCMD].buff, cmd.buff, sizeof(cmd.buff));
 					m_currCMD++;
@@ -409,6 +408,7 @@ void CMainAppl::ExecCMD()
 {
 	for(int i = 0; i < m_currCMD; i++)
 	{
+		m_incomingCmd[i].EjectType();
 		ProcessCMD(m_incomingCmd[i]);
 		m_incomingCmd[i].clear();
 	}
@@ -769,21 +769,37 @@ bool CMainAppl::ReadVoltageAC()
 
 bool CMainAppl::ReadVoltageDC() 
 { 
-    static double prevValue = 0.0f;
+	static double prevValue = 0.0f;
     
-      double Vcc = readVcc();
-      double voltRatio = Vcc/1023 ;
-  
-      int VoltageSensorValue = (analogRead(SENSOR_VOLT_DC));
-      double value = VoltageSensorValue * voltRatio * 5.0f; /*dividerRatio = 5*/
-    if(prevValue != value)
-    {
-        memset(m_VoltageDC, 0, sizeof(m_VoltageDC));
-        prevValue = value;      
+	double Vcc = readVcc();
+	double voltRatio = Vcc / 1023 ;
+	
+	int VoltageSensorValue = (analogRead(SENSOR_VOLT_DC));
 
-            dtostrf(value, 4, 1, m_VoltageDC);
-        return true;
-    }
+
+	double value = VoltageSensorValue * voltRatio * 5.0f; /*dividerRatio = 5*/
+
+	/*
+	SMES("Vcc: ");
+	SMES(Vcc);
+	SMES(" VRatio: ");
+	SMES(voltRatio);
+	SMES(" PinV: ");
+	SMES(VoltageSensorValue);
+	SMES(" Value: ");
+	SMESN(value);
+	*/
+	SMES("VCC: ");
+	SMESN(value);
+
+	if(prevValue != value)
+	{
+		memset(m_VoltageDC, 0, sizeof(m_VoltageDC));
+		prevValue = value;      
+
+		dtostrf(value, 4, 1, m_VoltageDC);
+		return true;
+	}
     return false;
 }
 
@@ -930,6 +946,5 @@ float CMainAppl::readVcc() {
     }
     result = result / 5;
 #endif
-
     return result;
 }

@@ -44,7 +44,7 @@ short CElecPanelController::SetupObjects()
     
 
     //SETUP SCREEN
-    short PIN_DISPLAY = 43; //LOWSIGNAL
+    short PIN_DISPLAY = 37; //LOWSIGNAL
     m_arrSocketSwitches[m_countSocket++] = new CDisplaySocket(PIN_DISPLAY, timeOff, "bt3", EL_POINT_3, "", "bf3", EL_POINT_PROP_3, "");
     m_arrSocketSwitches[m_countSocket - 1]->SetTimerParent(m_arrSocketSwitches[m_countSocket-1]);
     m_slots[nextSlot++] = m_arrSocketSwitches[m_countSocket - 1]->GetID(); //SCREEN 3
@@ -55,25 +55,29 @@ short CElecPanelController::SetupObjects()
     m_arrSocketSwitches[m_countSocket - 1]->SetTimerParent(m_arrSocketSwitches[m_countSocket-1]);
     m_slots[nextSlot++] = m_arrSocketSwitches[m_countSocket - 1]->GetID(); //CHARGE BOX 4
     
-    //SETUP UPS 1
-    short PIN_UPS1 = 46;      //HIGH SIGNAL
-    short PIN_INDICATOR_UPS_1 = 47;
-    m_arrSocketSwitches[m_countSocket++] = new CUPSSocket(PIN_UPS1, timeOff, "bt5", EL_POINT_5, "", "", "", "", PIN_INDICATOR_UPS_1);
+
+	short PIN_INDICATOR_UPS_1 = 10; // PIN INDICATOR FOR 3 UPS BUTTON, IF EXISTS ACCUMS
+	short PIN_INDICATOR_UPS_220 = 11;
+
+	short PIN_UPS1 = 46;      //HIGH SIGNAL
+    m_arrSocketSwitches[m_countSocket++] = new CUPSSocket2(PIN_UPS1, timeOff, "bt5", EL_POINT_5, "", "", "", "", PIN_INDICATOR_UPS_1, PIN_INDICATOR_UPS_220);
     m_arrSocketSwitches[m_countSocket - 1]->SetTimerParent(m_arrSocketSwitches[m_countSocket-1]);
     m_slots[nextSlot++] = m_arrSocketSwitches[m_countSocket - 1]->GetID(); //UPS 1
 
+
+	//SETUP UPS 2, AS IS
     short PIN_UPS2 = 44;
-    short PIN_INDICATOR_UPS_2 = 45;
-    m_arrSocketSwitches[m_countSocket++] = new CUPSSocket(PIN_UPS2, timeOff, "bt6", EL_POINT_6, "", "", "", "", PIN_INDICATOR_UPS_2);
+    m_arrSocketSwitches[m_countSocket++] = new CUPSSocket(PIN_UPS2, timeOff, "bt6", EL_POINT_6, "", "", "", "", PIN_INDICATOR_UPS_1);
     m_arrSocketSwitches[m_countSocket - 1]->SetTimerParent(m_arrSocketSwitches[m_countSocket-1]);
     m_slots[nextSlot++] = m_arrSocketSwitches[m_countSocket - 1]->GetID(); //UPS 1
         
 
     //SETUP BUTTON BEETWEN UPS 1 AND UPS 2
     short PIN_BUTTON_UPS = 53;
-    m_arrSocketSwitches[m_countSocket++] = new CSimpleSocet(PIN_BUTTON_UPS, timeOff, "bt7", EL_POINT_7_AUTOM, "", "", "", "");
+    m_arrSocketSwitches[m_countSocket++] = new CUPSSocket(PIN_BUTTON_UPS, timeOff, "bt7", EL_POINT_7_AUTOM, "", "", "", "", PIN_INDICATOR_UPS_1);
     m_arrSocketSwitches[m_countSocket - 1]->SetTimerParent(m_arrSocketSwitches[m_countSocket-1]);
     m_slots[nextSlot++] = m_arrSocketSwitches[m_countSocket - 1]->GetID();
+	//опнбепхрэ охм хмдхкйюрнп, еякх ярнхр рн бшпсаюел еякх мер, рн нй
 
     //SETUP COOLER PIN
     short PIN_COOLER = 13;
@@ -215,7 +219,7 @@ void CElecPanelController::InvalidateScreen()
 
 	  sCmdInvalidate invA(CMD_EL_INVALIDATE_A);
 	 
-	  for(int i = 0; i < m_countSocket; i++)
+	for(int i = 0; i < m_countSocket; i++)
 	 {
 		 invA.AddNextSymb(m_arrSocketSwitches[i]->GetCmdForInvalidateBtn()->GetAction() == 1 ? '1' : '0');
 		 if(i < 4)
@@ -260,12 +264,12 @@ short CElecPanelController::Init()
     ret = SetupObjects();
 
     if(ret != 1) return ret;   
+	//todo
+    //for(int i = 0; i < m_countSocket; i++)
+      //  m_arrSocketSwitches[i]->OnSocet();
 
-    for(int i = 0; i < m_countSocket; i++)
-        m_arrSocketSwitches[i]->OnSocet();  
-
-    if(m_cooler)
-        m_cooler->On();
+    //if(m_cooler)
+      //  m_cooler->On();
 
     return 1;
 }

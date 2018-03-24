@@ -7,9 +7,13 @@
     }
 #endif
 
-bool IsDoubleEqual(double x, double y)
+bool IsDoubleEqual4(double x, double y)
 {
-    return fabs(x - y) < 1e-6;
+    return fabs(x - y) < 1e-4;
+}
+bool IsDoubleEqual2(double x, double y)
+{
+	return fabs(x - y) < 1e-2;
 }
 
 void SetPinModeInput(short pin, bool IsInput)

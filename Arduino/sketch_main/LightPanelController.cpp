@@ -211,7 +211,6 @@ void CLightPanelController::EventSensorButton(void *ptr)
 
 void CLightPanelController::ProcessInvalidateCMD(sCmdInvalidate& cmd)
 {
-	//todo delay ? 
 	if(cmd.GetMode() == 'A')
 	{
 		//invalidte sens lamp
@@ -232,13 +231,20 @@ void CLightPanelController::ProcessInvalidateCMD(sCmdInvalidate& cmd)
 		}
 
 		m_btnAutoAll->SetValue(cmd.GetItem(i++) == '1' ? 1 : 0);
+		delay(30);
+		
 		m_btnAutoCeil->SetValue(cmd.GetItem(i++) == '1' ? 1 : 0);
+		delay(30);
+		
 		m_btnAutoSingle->SetValue(cmd.GetItem(i++) == '1' ? 1 : 0);
+		delay(30);
 	}
 }
 
 void CLightPanelController::ProcessCMD(sCmdWord &cmd)
 {
+	CDelay del(30);
+
     CLightPanelController* pController = (CLightPanelController*)app->m_Constructor.GetObject(eLight);
     int action = cmd.GetAction(); 
 
